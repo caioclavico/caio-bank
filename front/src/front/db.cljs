@@ -1,4 +1,5 @@
 (ns front.db)
 
 (def default-db
-  {:name "re-frame"})
+  {:login-form {:cpf nil
+                :senha nil}})

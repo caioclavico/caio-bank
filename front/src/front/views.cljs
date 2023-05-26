@@ -1,16 +1,14 @@
 (ns front.views
   (:require
-   [re-frame.core :as re-frame]
-   [front.events :as events]
-   [front.subs :as subs]
-   [front.routes :as routes]
+   [front.util :as util]
    [front.pages.login.views :refer [page-login]]
    [front.pages.cadastro.views :refer [page-cadastro]]
-   [react-router-dom :refer [BrowserRouter Route Switch useHistory]]
+   [react-router-dom :refer [BrowserRouter Route Switch]]
    [reagent.core :as r]))
 
 (defn page-not-found []
-  [:h1 "404 - Page not found"]) ;;? como adicionar uma imagem?
+  [:img {:alt "404 - Page not found"
+         :src (util/->path "404-not-found.jpg")}]) ;;? como adicionar uma imagem?
 
 (defn ->rota [path page]
   [:> Route {:path path :exact true :component (r/reactify-component (fn [] page))}])

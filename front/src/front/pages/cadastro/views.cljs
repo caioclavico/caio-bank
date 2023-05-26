@@ -1,5 +1,7 @@
 (ns front.pages.cadastro.views
   (:require
+   [front.pages.cadastro.events :as events]
+   [front.pages.cadastro.subs :as subs]
    [front.components.components :refer [tema Botao Input Header]]
    ["@mui/material/styles" :refer [ThemeProvider]]
    ["@mui/material" :refer [CssBaseline Container Typography Avatar Link Stack]]
@@ -23,18 +25,25 @@
      [Input {:id "nome"
              :label "Nome"
              :variante "outlined"
-             :required true}]
+             :required true
+             :evento [::events/insert-data :nome]
+             :subscricao [::subs/form-data :nome]}]
      [Input {:id "cpf"
              :label "CPF"
              :variante "outlined"
-             :required true}]
+             :required true
+             :evento [::events/insert-data :cpf]
+             :subscricao [::subs/form-data :cpf]}]
      [Input {:id "password"
              :label "Senha"
              :variante "outlined"
              :tipo "password"
-             :required true}]
+             :required true
+             :evento [::events/insert-data :senha]
+             :subscricao [::subs/form-data :senha]}]
      [:> Stack {:direction "row" :spacing 4 :alignItems "center"}
       [Botao {:label "Cadastrar"
               :tipo "principal"
-              :tamanho "large"}]
+              :tamanho "large"
+              :evento [::events/try-cadastro]}]
       [:> Link {:href "/login" :variant "body2"} "Voltar"]]]]])
