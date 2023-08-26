@@ -17,4 +17,4 @@
       v)))
 
 (defn ->path [img]
-  (str "/static/assets/" img))
+  (str "/assets/img/" img))
