@@ -28,7 +28,7 @@
              :variante "outlined"
              :required true
              :evento [::events/insert-data :cpf]
-             :subscricao [::subs/form-data :cpf]}] 
+             :subscricao [::subs/form-data :cpf]}]
      [Input {:id "id_senha"
              :label "Senha"
              :variante "outlined"
@@ -39,5 +39,5 @@
      [Botao {:label "Entrar"
              :tipo "principal"
              :tamanho "large"
-             :evento [::events/try-login]}]
+             :evento [::events/try-login-mock]}]
      [:> Link {:href "/cadastro" :variant "body2"} "Não possui conta? Cadastre-se"]]]])

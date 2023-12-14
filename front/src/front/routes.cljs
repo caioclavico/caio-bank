@@ -10,6 +10,7 @@
   (atom
    ["/" {"login" :login
          "about" :about
+         "cadastro" :cadastro
          "users" {"" :users-index
                   ["/" :id] :user-view}}]))
 

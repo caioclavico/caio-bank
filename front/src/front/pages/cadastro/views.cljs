@@ -45,5 +45,5 @@
       [Botao {:label "Cadastrar"
               :tipo "principal"
               :tamanho "large"
-              :evento [::events/try-cadastro]}]
+              :evento [::events/try-cadastro-mock]}]
       [:> Link {:href "/login" :variant "body2"} "Voltar"]]]]])

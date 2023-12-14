@@ -34,13 +34,14 @@
                    :required required
                    :type tipo
                    :value (or @valor-subscricao "")
+                   ;;:onChange #(re-frame/dispatch [evento id (util/valor-parser (-> % .-target .-value) mascara)])
                    :onChange #(re-frame/dispatch (conj evento (util/valor-parser (-> % .-target .-value) mascara)))}]))
 
 (defn Header
   []
   [:> AppBar {:position "static"}
    [:> Container {:maxWidth "xl"}
-    [:> Toolbar {:disableGutters true 
+    [:> Toolbar {:disableGutters true
                  :sx {:justifyContent {:xs "center" :sm "flex-start"}}}
      [:> Typography {:variant "h6"
                      :noWrap true

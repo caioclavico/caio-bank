@@ -4,7 +4,8 @@
    [front.util :as util]
    [day8.re-frame.http-fx]
    [re-frame.core :as re-frame]
-   [reagent.cookies :as cookies]))
+   [reagent.cookies :as cookies]
+   [front.db :as db]))
 
 (re-frame/reg-event-db
  ::insert-data
@@ -12,6 +13,11 @@
    (-> db
        (update :login-form dissoc :erros)
        (assoc-in [:login-form caminho] valor))))
+
+(re-frame/reg-event-db
+ ::get-data
+ (fn [db [_ caminho]]
+   (get-in db [:cadastro-form caminho])))
 
 (re-frame/reg-event-db
  ::login-success
@@ -49,3 +55,20 @@
                    :response-format (ajax/raw-response-format)
                    :on-success [::login-success]
                    :on-failure [::login-failure]}})))
+
+(re-frame/reg-event-db
+ ::try-login-mock
+ (fn [db]
+   (let [form (:login-form db)
+         cpf (keyword (:cpf form))
+         senha (:senha form)
+         usuario (get-in @db/mock-db [:usuarios cpf])]
+     (prn @db/mock-db)
+     (if usuario
+       (if (= senha (:senha usuario))
+         (do (prn "login com sucesso!")
+             (update db :login-form dissoc :erros))
+         (do (prn "senha ou usuario incorreto")
+             (assoc-in db [:login-form :erros] ["Usuário inválido."])))
+       (do (prn "usuario não existe")
+           (assoc-in db [:login-form :erros] ["Usuário não existe."]))))))

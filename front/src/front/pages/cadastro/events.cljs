@@ -4,7 +4,8 @@
    [front.util :as util]
    [day8.re-frame.http-fx]
    [re-frame.core :as re-frame]
-   [reagent.cookies :as cookies]))
+   [reagent.cookies :as cookies]
+   [front.db :as db]))
 
 (re-frame/reg-event-db
  ::insert-data
@@ -23,7 +24,7 @@
 (re-frame/reg-event-db
  ::cadastro-failure
  (fn [db [_ _response]]
-   (assoc-in db [:cadastro-form :erros] ["Não foi possível realizar o login."])))
+   (assoc-in db [:cadastro-form :erros] ["Não foi possível realizar o cadastro."])))
 
 (re-frame/reg-event-fx
  ::try-cadastro
@@ -47,3 +48,16 @@
                    :response-format (ajax/raw-response-format)
                    :on-success [::cadastro-success]
                    :on-failure [::cadastro-failure]}})))
+
+(re-frame/reg-event-db
+ ::try-cadastro-mock
+ (fn [db]
+   (let [form (:cadastro-form db)
+         cpf (keyword (:cpf form))]
+     (prn @db/mock-db)
+     (if-not (get-in @db/mock-db [:usuarios cpf])
+       (if (:cpf form)
+         (swap! db/mock-db assoc-in [:usuarios cpf] form)
+         (assoc-in db [:cadastro-form :erros] ["Usuário inválido."]))
+       (do (prn "usuario já existe")
+           (assoc-in db [:cadastro-form :erros] ["Usuário já existe."]))))))
